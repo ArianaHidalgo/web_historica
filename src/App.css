@@ -1,0 +1,80 @@
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #ddecf8;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .row .sub{
+          justify-content: space-between;
+          margin-bottom: 20px;
+      }
+        span {
+            float: right;
+            font-size: 15px;
+            padding-top: 10px;
+            padding-right: 20px;
+        }
+        .section {
+            flex: 1;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #fff;
+            margin-top: 20px;
+        }
+        
+        .sub {
+            flex: 1;
+            width: 100%;
+            margin-right: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            margin-top: 10px;
+        }
+        .sub h3 {
+            padding-left: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color:  #eaf5fe;
+        }
+        .selectable {
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .selectable:hover {
+            background-color: #f0f0f0;
+            color: #000000
+        }
+        .active {
+            background-color: #5ca5f3; /* Color de fondo azul para la fila activa */
+            color: white; /* Cambiar el texto a blanco para mejor contraste */
+        }
+        .scrollable {
+            max-height: 150px; /* Altura máxima para el scroll */
+            overflow-y: auto; /* Permitir scroll vertical */
+            margin-top: 10px; /* Espaciado */
+            border: 1px solid #ddd; /* Borde para separación */
+            display: block; /* Esto permite que el scroll funcione solo en el contenido */
+        }
