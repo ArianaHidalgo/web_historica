@@ -7,37 +7,51 @@ import ProductosAdicionales from './components/ProductosAdicionales';
 import OrdenesTecnicas from './components/OrdenesTecnicas';
 import NotasCredito from './components/NotasCredito';
 import OrdenesComerciales from './components/OrdenesComerciales';
-import { obtenerDatos } from './api';
+import { obtenerDatos, obtenerReclamos } from './api';
 
 function App() {
   const [direccionSeleccionada, setDireccionSeleccionada] = useState(null);
   const [datosCliente, setDatosCliente] = useState([]);
+  const [datosReclamosPrueba, setDatosReclamosPrueba] = useState([]); // Estado para los datos de prueba de reclamos
   const [error, setError] = useState(null);
 
+  // Carga los datos del cliente
   useEffect(() => {
     const cargarDatosCliente = async () => {
       try {
         const clienteData = await obtenerDatos();
-        console.log("Datos obtenidos del API:", clienteData); // Verifica los datos obtenidos
-        setDatosCliente(clienteData); // Guarda todos los datos en el estado como array
+        setDatosCliente(clienteData);
       } catch (error) {
-        console.error("Error al cargar datos:", error);
-        setError(error); // Guarda el error en el estado para mostrarlo en la interfaz
+        setError("Error al cargar datos del cliente.");
+        console.error("Error al cargar datos del cliente:", error);
       }
     };
 
     cargarDatosCliente();
   }, []);
 
+  // Prueba de obtenerReclamos directamente en App.js
+  useEffect(() => {
+    const cargarReclamosPrueba = async () => {
+      try {
+        console.log("Llamando a obtenerReclamos desde App.js para prueba...");
+        const reclamosData = await obtenerReclamos();
+        console.log("Datos obtenidos en App.js:", reclamosData); // Imprime los datos en la consola
+        setDatosReclamosPrueba(reclamosData);
+      } catch (error) {
+        console.error("Error al cargar reclamos desde App.js:", error);
+        setError("Error al cargar datos de reclamos.");
+      }
+    };
+
+    cargarReclamosPrueba();
+  }, []);
+
   const cambiarDireccion = (selectedDireccion) => {
     setDireccionSeleccionada(selectedDireccion);
   };
 
-  // Verifica el valor de datosCliente en cada renderizado
-  console.log("Estado de datosCliente en App:", datosCliente);
-
-  if (error) return <div>Error al cargar datos: {error.message}</div>;
-  if (!Array.isArray(datosCliente) || datosCliente.length === 0) return <div>Cargando...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="container">
@@ -45,6 +59,39 @@ function App() {
 
       {/* Componente Direccion para mostrar la tabla de direcciones */}
       <Direccion datosCliente={datosCliente} />
+
+      {/* Prueba: Muestra los datos de reclamos directamente en App.js */}
+      <div className="section">
+        <h3>Datos de Reclamos</h3>
+        {datosReclamosPrueba.length > 0 ? (
+          <table>
+            <thead>
+              <tr>
+                <th>Orden</th>
+                <th>Fecha inicio</th>
+                <th>Fecha fin </th>
+                <th>Comentario 1</th>
+                <th>Comentario 2</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {datosReclamosPrueba.map((reclamo, index) => (
+                <tr key={index}>
+                  <td>{reclamo.orden || "No disponible"}</td>
+                  <td>{reclamo.sintoma1 || "No disponible"}</td>
+                  <td>{reclamo.sintoma2 || "No disponible"}</td>
+                  <td>{reclamo.fechaCreacion || "No disponible"}</td>
+                  <td>{reclamo.fechaCierre || "No disponible"}</td>
+                  <td>{reclamo.estado || "No disponible"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No hay datos de reclamos disponibles</p>
+        )}
+      </div>
 
       {/* Otros componentes que pueden depender de la dirección seleccionada */}
       <div className="row">
