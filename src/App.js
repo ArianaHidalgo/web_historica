@@ -57,7 +57,7 @@ function App() {
       </div>
 
       <div className="row">
-        <OrdenesTecnicas direccionSeleccionada={direccionSeleccionada} />
+        <OrdenesTecnicas direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
         <NotasCredito direccionSeleccionada={direccionSeleccionada} />
       </div>
 

@@ -137,3 +137,37 @@ export const obtenerProductosAdicionales = async (rutCliente, tipoCliente) => {
     throw error;
   }
 };
+
+// Función para obtener órdenes técnicas con `rutCliente` y `tipoCliente`
+export const obtenerOrdenesTecnicas = async (rutCliente, tipoCliente) => {
+  try {
+    // Usa `rutCliente` proporcionado, o intenta obtenerlo desde la URL
+    const rut = rutCliente || obtenerRutDesdeUrl();
+
+    if (!rut) throw new Error('rutCliente no está disponible ni en el payload ni en la URL');
+    if (!tipoCliente) throw new Error('tipoCliente no está disponible para obtener las órdenes técnicas');
+
+    console.log("Enviando solicitud a obtenerOrdenesTecnicas con:", { rut, tipoCliente });
+
+    const response = await fetch(`${API_BASE_URL}/ms-get-orden-tecnica-proj/ms-get-ordenes-tecnicas`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        rut: rut,
+        cliente: tipoCliente
+      }),
+    });
+
+    if (!response.ok) throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
+
+    const data = await response.json();
+    const parsedMessage = Array.isArray(data.message) ? data.message : JSON.parse(data.message);
+
+    return parsedMessage;
+  } catch (error) {
+    console.error("Error en obtenerOrdenesTecnicas:", error);
+    throw error;
+  }
+};
