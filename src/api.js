@@ -37,7 +37,7 @@ export const obtenerReclamos = async () => {
       },
       body: new URLSearchParams({
         rut: '8058969-7',
-        cliente: 'Persona'
+        cliente: 'PERSONA'
       })
     });
 

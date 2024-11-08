@@ -32,6 +32,7 @@ function Reclamos({ direccionSeleccionada }) {
 
     if (direccionSeleccionada) {
       console.log("Dirección seleccionada detectada, llamando a cargarReclamos...");
+      console.log("Direccion seleccionada:", direccionSeleccionada); // Verifica el valor de la dirección seleccionada
       cargarReclamos();
     } else {
       console.log("No hay dirección seleccionada");
@@ -41,12 +42,17 @@ function Reclamos({ direccionSeleccionada }) {
 
   console.log("Estado final de datosReclamos en render:", datosReclamos);
 
+  // Renderizado condicional
   if (error) {
     return <div>{error}</div>;
   }
 
   if (loading) {
     return <div>Cargando reclamos...</div>;
+  }
+
+  if (!direccionSeleccionada) {
+    return <div>Seleccione una dirección para ver los reclamos.</div>;
   }
 
   if (datosReclamos.length === 0) {
