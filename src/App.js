@@ -20,7 +20,6 @@ function App() {
       try {
         const clienteData = await obtenerDatos();
         setDatosCliente(clienteData);
-
         setTipoCliente(clienteData[0]?.tipoCliente || null);
       } catch (error) {
         setError("Error al cargar datos del cliente.");
@@ -42,25 +41,18 @@ function App() {
   return (
     <div className="container">
       <h2>Información del Cliente</h2>
-
-      {/* Pasa cambiarDireccion a Direccion como onDireccionSeleccionada */}
       <Direccion datosCliente={datosCliente} onDireccionSeleccionada={cambiarDireccion} />
-
-      {/* Otros componentes que dependen de la dirección seleccionada */}
       <div className="row">
         <Reclamos direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
       </div>
-
       <div className="row">
         <Productos direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
         <ProductosAdicionales direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
       </div>
-
       <div className="row">
         <OrdenesTecnicas direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
-        <NotasCredito direccionSeleccionada={direccionSeleccionada} />
+        <NotasCredito direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
       </div>
-
       <div className="row">
         <OrdenesComerciales direccionSeleccionada={direccionSeleccionada} />
       </div>
