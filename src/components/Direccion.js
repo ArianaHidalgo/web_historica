@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Direccion = ({ datosCliente, onDireccionSeleccionada }) => {
-  console.log("datosCliente recibido en Direccion:", datosCliente); // Verifica el valor en el renderizado
+  // Estado para el índice de la fila seleccionada
+  const [activeIndex, setActiveIndex] = useState(null);
 
-  // Condicional para verificar si hay datos
   if (Array.isArray(datosCliente) && datosCliente.length > 0) {
     return (
       <div className="section">
@@ -16,12 +16,16 @@ const Direccion = ({ datosCliente, onDireccionSeleccionada }) => {
               <th>Plan Contratado</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className={datosCliente.length > 5 ? 'scrollable' : ''}>
             {datosCliente.map((cliente, index) => (
-              <tr className="selectable"
+              <tr
                 key={index}
-                onClick={() => onDireccionSeleccionada(cliente)} // Llama a la función al hacer clic
-                style={{ cursor: "pointer" }} // Agrega un estilo para indicar que es clicable
+                className={`selectable ${activeIndex === index ? 'active' : ''}`}
+                onClick={() => {
+                  onDireccionSeleccionada(cliente);
+                  setActiveIndex(index); // Actualiza el índice activo
+                }}
+                style={{ cursor: "pointer" }}
               >
                 <td>{cliente.direccion || "No disponible"}</td>
                 <td>{cliente.tipoCliente || "No disponible"}</td>
@@ -33,13 +37,13 @@ const Direccion = ({ datosCliente, onDireccionSeleccionada }) => {
       </div>
     );
   } else {
-    console.log("No hay datos en datosCliente o no es un array."); // Log para confirmar la razón
-    return <div className="section">
-              <h3 style={{
-              paddingTop: "100px",
-              paddingLeft: "160px"
-              }}>No hay datos de notas de credito </h3>
-            </div>;
+    return (
+      <div className="section">
+        <h3>
+          Cargando datos... 
+        </h3>
+      </div>
+    );
   }
 };
 

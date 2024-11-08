@@ -38,11 +38,12 @@ function SuspensionVoluntaria({ direccionSeleccionada }) {
 
   if (suspensiones.length === 0) {
     return <div className="section">
-              <h3 style={{
-              paddingTop: "100px",
-              paddingLeft: "160px"
-              }}>No hay datos de notas de credito </h3>
-            </div>;
+             <h3>Suspensión Voluntaria</h3>
+            <h3 style={{
+              marginTop: "5%",
+            marginLeft: "35%"
+            }}>No hay datos de suspensión voluntaria</h3>
+          </div>
   }
 
   return (
@@ -58,7 +59,7 @@ function SuspensionVoluntaria({ direccionSeleccionada }) {
             <th>Observación</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={suspensiones.length > 5 ? 'scrollable' : ''}>
           {suspensiones.map((suspension, index) => (
             <tr key={index}>
               <td>{suspension.fechaSolicitud || "No disponible"}</td>

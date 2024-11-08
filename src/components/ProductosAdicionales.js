@@ -41,7 +41,7 @@ function ProductosAdicionales({ direccionSeleccionada, tipoCliente }) {
               <h3 style={{
               paddingTop: "100px",
               paddingLeft: "160px"
-              }}>No hay datos de notas de credito </h3>
+              }}>No hay datos de productos adicionales</h3>
             </div>;
   }
 
@@ -58,7 +58,7 @@ function ProductosAdicionales({ direccionSeleccionada, tipoCliente }) {
             <th>Fecha de Baja</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={productosAdicionales.length > 4 ? 'scrollable' : ''}>
           {productosAdicionales.map((producto, index) => (
             <tr key={index}>
               <td>{producto.producto || "No disponible"}</td>

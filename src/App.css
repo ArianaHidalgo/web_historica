@@ -55,21 +55,28 @@
         .selectable {
             cursor: pointer;
             transition: background-color 0.3s;
-        }
+          }
+          
         .selectable:hover {
-            background-color: #5ca5f3;
-            color: #ffffff
+            background-color: #f5f7f8;
+            color: #000000;
         }
-        .selectable:active {
-            background-color: #5ca5f3; /* Color de fondo azul para la fila activa */
-            color: white; /* Cambiar el texto a blanco para mejor contraste */
-        }
+          
+        .selectable.active {
+            background-color: #5ca5f3; /* Color de fondo para la fila activa */
+          color: white; /* Texto en blanco */
+          }
+          
         .scrollable {
-            max-height: 150px; /* Altura máxima para el scroll */
-            overflow-y: auto; /* Permitir scroll vertical */
-            margin-top: 10px; /* Espaciado */
-            border: 1px solid #ddd; /* Borde para separación */
-            display: block; /* Esto permite que el scroll funcione solo en el contenido */
+            display: block;
+            max-height: 180px; /* Ajusta la altura según lo necesites */
+            overflow-y: auto; /* Scroll solo en el eje vertical */
+            overflow-x: hidden; /* Evita el scroll horizontal */
+          }
+        thead, tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed; /* Mantiene el ancho de las columnas alineado */
         }
         @media (max-width: 1300px) { /* Ajusta el tamaño según lo necesites */
             .row {

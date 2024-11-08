@@ -37,12 +37,15 @@ function OrdenesTecnicas({ direccionSeleccionada, tipoCliente }) {
   }
 
   if (ordenesTecnicas.length === 0) {
-    return <div className="section">
+    return (
+      <div className="section">
+        <h3>Órdenes Técnicas</h3>
             <h3 style={{
-            paddingTop: "100px",
-            paddingLeft: "160px"
-            }}>No hay datos de notas de credito </h3>
-          </div>;
+              marginTop: "20%",
+            marginLeft: "30%"
+            }}>No hay datos de ordenes técnicas</h3>
+      </div>
+    );
   }
 
   return (
@@ -57,7 +60,7 @@ function OrdenesTecnicas({ direccionSeleccionada, tipoCliente }) {
             <th>Fecha Cierre</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={ordenesTecnicas.length > 4 ? 'scrollable' : ''}>
           {ordenesTecnicas.map((orden, index) => (
             <tr key={index}>
               <td>{orden.orden || "No disponible"}</td>

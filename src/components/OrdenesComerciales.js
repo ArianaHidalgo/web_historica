@@ -42,7 +42,7 @@ function OrdenesComerciales({ direccionSeleccionada, tipoCliente }) {
             <h3 style={{
               marginTop: "5%",
             marginLeft: "35%"
-            }}>No hay datos de notas de credito </h3>
+            }}>No hay datos de órdenes comerciales</h3>
           </div>;
   }
 
@@ -60,7 +60,7 @@ function OrdenesComerciales({ direccionSeleccionada, tipoCliente }) {
             <th>Fecha Cierre</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={ordenesComerciales.length > 5 ? 'scrollable' : ''}>
           {ordenesComerciales.map((orden, index) => (
             <tr key={index}>
               <td>{orden.orden || "No disponible"}</td>

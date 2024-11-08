@@ -43,7 +43,7 @@ function Reclamos({ direccionSeleccionada, tipoCliente }) {
               <h3 style={{
               paddingTop: "100px",
               paddingLeft: "160px"
-              }}>No hay datos de notas de credito </h3>
+              }}>No hay datos de reclamos </h3>
             </div>;
   }
 
@@ -61,7 +61,7 @@ function Reclamos({ direccionSeleccionada, tipoCliente }) {
             <th>Estado</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={datosReclamos.length > 5 ? 'scrollable' : ''}>
           {datosReclamos.map((reclamo, index) => (
             <tr key={index}>
               <td>{reclamo.orden || "No disponible"}</td>

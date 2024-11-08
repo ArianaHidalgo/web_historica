@@ -38,11 +38,12 @@ function NotasCredito({ direccionSeleccionada, tipoCliente }) {
 
   if (notasCredito.length === 0) {
     return <div className="section">
-              <h3 style={{
-              paddingTop: "100px",
-              paddingLeft: "160px"
-            }}>No hay datos de notas de credito </h3>
-            </div>
+               <h3>Notas de Crédito</h3>
+            <h3 style={{
+              marginTop: "20%",
+            marginLeft: "30%"
+            }}>No hay datos de notas de créditos</h3>
+          </div>
   }
 
   return (
@@ -57,7 +58,7 @@ function NotasCredito({ direccionSeleccionada, tipoCliente }) {
             <th>Motivo Ajuste</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={notasCredito.length > 5 ? 'scrollable' : ''}>
           {notasCredito.map((nota, index) => (
             <tr key={index}>
               <td>{nota.folioAjustado || "No disponible"}</td>
