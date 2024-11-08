@@ -33,7 +33,7 @@ function OrdenesTecnicas({ direccionSeleccionada, tipoCliente }) {
   }
 
   if (loading) {
-    return <div>Cargando órdenes técnicas...</div>;
+    return <div></div>;
   }
 
   if (ordenesTecnicas.length === 0) {

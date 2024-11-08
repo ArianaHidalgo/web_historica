@@ -33,7 +33,7 @@ function NotasCredito({ direccionSeleccionada, tipoCliente }) {
   }
 
   if (loading) {
-    return <div>Cargando notas de crédito...</div>;
+    return <div></div>;
   }
 
   if (notasCredito.length === 0) {

@@ -6,7 +6,7 @@ const Direccion = ({ datosCliente, onDireccionSeleccionada }) => {
   // Condicional para verificar si hay datos
   if (Array.isArray(datosCliente) && datosCliente.length > 0) {
     return (
-      <div>
+      <div className="section">
         <h3>Direcciones</h3>
         <table>
           <thead>

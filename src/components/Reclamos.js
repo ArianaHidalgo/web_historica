@@ -35,7 +35,7 @@ function Reclamos({ direccionSeleccionada, tipoCliente }) {
   }
 
   if (loading) {
-    return <div>Cargando reclamos...</div>;
+    return <div></div>;
   }
 
   if (datosReclamos.length === 0) {

@@ -33,7 +33,7 @@ function OrdenesComerciales({ direccionSeleccionada, tipoCliente }) {
   }
 
   if (loading) {
-    return <div>Cargando órdenes comerciales...</div>;
+    return <div></div>;
   }
 
   if (ordenesComerciales.length === 0) {

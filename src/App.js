@@ -41,7 +41,7 @@ function App() {
 
   return (
     <div className="container">
-      <h2>Información del Cliente</h2>
+      <h2>Información del Cliente Rut: 19.123.345-k <span>(Fecha de Migración: 01-10-2023)</span></h2>
       <Direccion datosCliente={datosCliente} onDireccionSeleccionada={cambiarDireccion} />
       <div className="row">
         <Reclamos direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />

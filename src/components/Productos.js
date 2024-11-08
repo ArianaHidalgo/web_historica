@@ -33,7 +33,7 @@ function Productos({ direccionSeleccionada, tipoCliente }) {
   }
 
   if (loading) {
-    return <div>Cargando productos...</div>;
+    return <div></div>;
   }
 
   if (productos.length === 0) {

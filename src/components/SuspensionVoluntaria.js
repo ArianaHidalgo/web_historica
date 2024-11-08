@@ -33,7 +33,7 @@ function SuspensionVoluntaria({ direccionSeleccionada }) {
   }
 
   if (loading) {
-    return <div>Cargando suspensiones...</div>;
+    return <div></div>;
   }
 
   if (suspensiones.length === 0) {

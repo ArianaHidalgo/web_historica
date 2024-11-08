@@ -33,7 +33,7 @@ function ProductosAdicionales({ direccionSeleccionada, tipoCliente }) {
   }
 
   if (loading) {
-    return <div>Cargando productos adicionales...</div>;
+    return <div></div>;
   }
 
   if (productosAdicionales.length === 0) {
