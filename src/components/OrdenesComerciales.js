@@ -37,7 +37,13 @@ function OrdenesComerciales({ direccionSeleccionada, tipoCliente }) {
   }
 
   if (ordenesComerciales.length === 0) {
-    return <div>No hay datos de órdenes comerciales disponibles</div>;
+    return <div className="section">
+      <h3>Órdenes Comerciales</h3>
+            <h3 style={{
+              marginTop: "5%",
+            marginLeft: "35%"
+            }}>No hay datos de notas de credito </h3>
+          </div>;
   }
 
   return (

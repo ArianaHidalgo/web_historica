@@ -42,8 +42,8 @@ function App() {
   return (
     <div className="container">
       <h2>Información del Cliente Rut: 19.123.345-k <span>(Fecha de Migración: 01-10-2023)</span></h2>
-      <Direccion datosCliente={datosCliente} onDireccionSeleccionada={cambiarDireccion} />
       <div className="row">
+         <Direccion datosCliente={datosCliente} onDireccionSeleccionada={cambiarDireccion} />
         <Reclamos direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
       </div>
       <div className="row">
@@ -54,9 +54,11 @@ function App() {
         <OrdenesTecnicas direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
         <NotasCredito direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
       </div>
-      <div className="row">
+      <div>
+        <div>
         <OrdenesComerciales direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
         <SuspensionVoluntaria direccionSeleccionada={direccionSeleccionada} />
+        </div>
       </div>
     </div>
   );

@@ -16,7 +16,6 @@
         }
         .row .sub{
           justify-content: space-between;
-          margin-bottom: 20px;
       }
         span {
             float: right;
@@ -35,16 +34,10 @@
         }
         
         .sub {
-            flex: 1;
-            width: 100%;
-            margin-right: 20px;
             border: 1px solid #ddd;
             border-radius: 5px;
             background-color: #fff;
-            margin-top: 10px;
-        }
-        .sub h3 {
-            padding-left: 20px;
+
         }
         table {
             width: 100%;
@@ -64,10 +57,10 @@
             transition: background-color 0.3s;
         }
         .selectable:hover {
-            background-color: #f0f0f0;
-            color: #000000
+            background-color: #5ca5f3;
+            color: #ffffff
         }
-        .active {
+        .selectable:active {
             background-color: #5ca5f3; /* Color de fondo azul para la fila activa */
             color: white; /* Cambiar el texto a blanco para mejor contraste */
         }
@@ -78,3 +71,8 @@
             border: 1px solid #ddd; /* Borde para separación */
             display: block; /* Esto permite que el scroll funcione solo en el contenido */
         }
+        @media (max-width: 1300px) { /* Ajusta el tamaño según lo necesites */
+            .row {
+              display: block; 
+        }
+    }

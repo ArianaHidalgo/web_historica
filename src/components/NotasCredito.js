@@ -33,11 +33,16 @@ function NotasCredito({ direccionSeleccionada, tipoCliente }) {
   }
 
   if (loading) {
-    return <div></div>;
+    return 
   }
 
   if (notasCredito.length === 0) {
-    return <div>No hay datos de notas de crédito disponibles</div>;
+    return <div className="section">
+              <h3 style={{
+              paddingTop: "100px",
+              paddingLeft: "160px"
+            }}>No hay datos de notas de credito </h3>
+            </div>
   }
 
   return (
