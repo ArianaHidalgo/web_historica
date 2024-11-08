@@ -22,7 +22,6 @@ function App() {
         setDatosCliente(clienteData);
 
         // Suponiendo que `tipoCliente` es un atributo de `clienteData`
-        // y debe ser el mismo para todo `datosCliente` o configurable
         setTipoCliente(clienteData[0]?.tipoCliente || null);
       } catch (error) {
         setError("Error al cargar datos del cliente.");
@@ -55,7 +54,8 @@ function App() {
       </div>
 
       <div className="row">
-        <Productos direccionSeleccionada={direccionSeleccionada} />
+        {/* Pasa `tipoCliente` a Productos */}
+        <Productos direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
         <ProductosAdicionales direccionSeleccionada={direccionSeleccionada} />
       </div>
 

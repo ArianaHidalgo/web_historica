@@ -1,65 +1,68 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { obtenerProductos } from '../api';
 
-function Productos({ direccionSeleccionada }) {
-  const contenidoProductos = {
-    1: (
-      <table>
-        <thead>
-          <tr>
-            <th>Producto</th>
-            <th>Estado</th>
-            <th>Fecha de Alta</th>
-            <th>Fecha de Baja</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Fono limitado 600 Móvil</td>
-            <td>Activo</td>
-            <td>24-12-2016</td>
-            <td>--</td>
-          </tr>
-          <tr>
-            <td>Internet 100MB</td>
-            <td>Activo</td>
-            <td>15-01-2017</td>
-            <td>--</td>
-          </tr>
-        </tbody>
-      </table>
-    ),
-    2: (
-      <table>
-        <thead>
-          <tr>
-            <th>Producto</th>
-            <th>Estado</th>
-            <th>Fecha de Alta</th>
-            <th>Fecha de Baja</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Fono ilimitado 500 Móvil</td>
-            <td>Activo</td>
-            <td>01-02-2018</td>
-            <td>--</td>
-          </tr>
-          <tr>
-            <td>Internet 50MB</td>
-            <td>Inactivo</td>
-            <td>20-03-2018</td>
-            <td>20-03-2022</td>
-          </tr>
-        </tbody>
-      </table>
-    ),
-  };
+function Productos({ direccionSeleccionada, tipoCliente }) {
+  const [productos, setProductos] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const cargarProductos = async () => {
+      if (!direccionSeleccionada || !tipoCliente) {
+        console.log("Esperando direccionSeleccionada y tipoCliente antes de cargar productos.");
+        return;
+      }
+
+      try {
+        setLoading(true);
+        const productosData = await obtenerProductos(direccionSeleccionada.rut, tipoCliente);
+        setProductos(productosData);
+      } catch (err) {
+        console.error("Error en cargarProductos de Productos.js:", err);
+        setError("No se pudieron cargar los productos");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    cargarProductos();
+  }, [direccionSeleccionada, tipoCliente]);
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (loading) {
+    return <div>Cargando productos...</div>;
+  }
+
+  if (productos.length === 0) {
+    return <div>No hay datos de productos disponibles</div>;
+  }
 
   return (
     <div className="section">
       <h3>Productos</h3>
-      <div>{contenidoProductos[direccionSeleccionada]}</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Estado</th>
+            <th>Fecha de Alta</th>
+            <th>Fecha de Baja</th>
+          </tr>
+        </thead>
+        <tbody>
+          {productos.map((producto, index) => (
+            <tr key={index}>
+              <td>{producto.producto || "No disponible"}</td>
+              <td>{producto.estado || "No disponible"}</td>
+              <td>{producto.fechaAlta || "No disponible"}</td>
+              <td>{producto.fechaBaja || "No disponible"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

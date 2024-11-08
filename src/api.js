@@ -61,14 +61,45 @@ export const obtenerReclamos = async (rutCliente, tipoCliente) => {
     if (!response.ok) throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
 
     const data = await response.json();
-    console.log("Datos JSON obtenidos de la API:", data);
-
     const parsedMessage = Array.isArray(data.message) ? data.message : JSON.parse(data.message);
-    console.log("Mensaje parseado:", parsedMessage);
 
     return parsedMessage;
   } catch (error) {
     console.error("Error en obtenerReclamos:", error);
+    throw error;
+  }
+};
+
+// Función para obtener productos con `rutCliente` y `tipoCliente`
+export const obtenerProductos = async (rutCliente, tipoCliente) => {
+  try {
+    // Usa `rutCliente` proporcionado, o intenta obtenerlo desde la URL
+    const rut = rutCliente || obtenerRutDesdeUrl();
+
+    if (!rut) throw new Error('rutCliente no está disponible ni en el payload ni en la URL');
+    if (!tipoCliente) throw new Error('tipoCliente no está disponible para obtener los productos');
+
+    console.log("Enviando solicitud a obtenerProductos con:", { rut, tipoCliente });
+
+    const response = await fetch(`${API_BASE_URL}/ms-get-producto-proj/ms-get-productos`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        rut: rut,
+        cliente: tipoCliente
+      }),
+    });
+
+    if (!response.ok) throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
+
+    const data = await response.json();
+    const parsedMessage = Array.isArray(data.message) ? data.message : JSON.parse(data.message);
+
+    return parsedMessage;
+  } catch (error) {
+    console.error("Error en obtenerProductos:", error);
     throw error;
   }
 };
