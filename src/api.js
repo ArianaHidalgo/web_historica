@@ -221,3 +221,28 @@ export const obtenerOrdenesComerciales = async (rutCliente, tipoCliente) => {
     throw error;
   }
 };
+
+// Función para obtener suspensiones con `rutCliente`
+export const obtenerSuspensiones = async (rutCliente) => {
+  try {
+    const rut = rutCliente || obtenerRutDesdeUrl();
+    if (!rut) throw new Error('rutCliente no está disponible ni en el payload ni en la URL');
+
+    console.log("Enviando solicitud a obtenerSuspensiones con:", { rut });
+
+    const response = await fetch(`${API_BASE_URL}/ms-get-suspension-proj/ms-get-suspensiones`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({ rut: rut })
+    });
+
+    if (!response.ok) throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
+    const data = await response.json();
+    return Array.isArray(data.message) ? data.message : JSON.parse(data.message);
+  } catch (error) {
+    console.error("Error en obtenerSuspensiones:", error);
+    throw error;
+  }
+};

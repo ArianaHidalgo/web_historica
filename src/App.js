@@ -7,6 +7,7 @@ import ProductosAdicionales from './components/ProductosAdicionales';
 import OrdenesTecnicas from './components/OrdenesTecnicas';
 import NotasCredito from './components/NotasCredito';
 import OrdenesComerciales from './components/OrdenesComerciales';
+import SuspensionVoluntaria from './components/SuspensionVoluntaria';
 import { obtenerDatos } from './api';
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
       </div>
       <div className="row">
         <OrdenesComerciales direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
+        <SuspensionVoluntaria direccionSeleccionada={direccionSeleccionada} />
       </div>
     </div>
   );
