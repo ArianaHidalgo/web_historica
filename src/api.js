@@ -1,15 +1,26 @@
 // src/api.js
 import { API_BASE_URL } from './config';
 
-// Función para obtener datos de direcciones
-export const obtenerDatos = async () => {
+// Función para obtener `rutCliente` desde los parámetros de la URL
+const obtenerRutDesdeUrl = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('rutCliente'); // Busca el parámetro `rutCliente` en la URL
+};
+
+// Función para obtener datos de direcciones con lógica para `rutCliente`
+export const obtenerDatos = async (rutCliente) => {
   try {
+    // Usa `rutCliente` proporcionado, o intenta obtenerlo desde la URL
+    const rut = rutCliente || obtenerRutDesdeUrl();
+
+    if (!rut) throw new Error('rutCliente no está disponible ni en el payload ni en la URL');
+
     const response = await fetch(`${API_BASE_URL}/ms-get-direccion-proj/ms-get-direcciones`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: `param=8170439-2`, // Envía el parámetro en el cuerpo como x-www-form-urlencoded
+      body: new URLSearchParams({ param: rut })
     });
 
     if (!response.ok) throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
@@ -26,8 +37,14 @@ export const obtenerDatos = async () => {
   }
 };
 
-export const obtenerReclamos = async () => {
+// Función para obtener datos de reclamos con lógica para `rutCliente`
+export const obtenerReclamos = async (rutCliente) => {
   try {
+    // Usa `rutCliente` proporcionado, o intenta obtenerlo desde la URL
+    const rut = rutCliente || obtenerRutDesdeUrl();
+
+    if (!rut) throw new Error('rutCliente no está disponible ni en el payload ni en la URL');
+
     console.log("Iniciando llamada a la API de reclamos...");
 
     const response = await fetch(`${API_BASE_URL}/ms-get-reclamo-proj/ms-get-reclamos`, {
@@ -36,15 +53,15 @@ export const obtenerReclamos = async () => {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
-        rut: '8058969-7',
+        rut: rut,
         cliente: 'PERSONA'
       })
     });
 
     console.log("Estado de la respuesta:", response.status, response.statusText);
-    
+
     if (!response.ok) throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
-    
+
     const data = await response.json();
     console.log("Datos JSON obtenidos de la API:", data);
 
