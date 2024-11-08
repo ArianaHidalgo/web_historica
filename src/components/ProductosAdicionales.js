@@ -38,10 +38,11 @@ function ProductosAdicionales({ direccionSeleccionada, tipoCliente }) {
 
   if (productosAdicionales.length === 0) {
     return <div className="section">
+              <h3>Productos Adicionales</h3>
               <h3 style={{
-              paddingTop: "100px",
+              paddingTop: "60px",
               paddingLeft: "160px"
-              }}>No hay datos de productos adicionales</h3>
+              }}>No hay datos de productos adicionales.</h3>
             </div>;
   }
 

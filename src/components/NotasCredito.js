@@ -40,9 +40,9 @@ function NotasCredito({ direccionSeleccionada, tipoCliente }) {
     return <div className="section">
                <h3>Notas de Crédito</h3>
             <h3 style={{
-              marginTop: "20%",
-            marginLeft: "30%"
-            }}>No hay datos de notas de créditos</h3>
+              paddingTop: "20%",
+              marginLeft: "30%"
+            }}>No hay datos de notas de créditos.</h3>
           </div>
   }
 

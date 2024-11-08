@@ -41,7 +41,7 @@ function Productos({ direccionSeleccionada, tipoCliente }) {
               <h3 style={{
               paddingTop: "100px",
               paddingLeft: "160px"
-              }}>No hay datos de productos</h3>
+              }}>No hay datos de productos.</h3>
             </div>;
   }
 

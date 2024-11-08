@@ -42,7 +42,7 @@ function SuspensionVoluntaria({ direccionSeleccionada }) {
             <h3 style={{
               marginTop: "5%",
             marginLeft: "35%"
-            }}>No hay datos de suspensión voluntaria</h3>
+            }}>No hay datos de suspensión voluntaria.</h3>
           </div>
   }
 

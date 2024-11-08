@@ -41,9 +41,9 @@ function OrdenesTecnicas({ direccionSeleccionada, tipoCliente }) {
       <div className="section">
         <h3>Órdenes Técnicas</h3>
             <h3 style={{
-              marginTop: "20%",
+              marginTop: "10%",
             marginLeft: "30%"
-            }}>No hay datos de ordenes técnicas</h3>
+            }}>No hay datos de ordenes técnicas.</h3>
       </div>
     );
   }

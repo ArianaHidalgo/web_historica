@@ -40,10 +40,11 @@ function Reclamos({ direccionSeleccionada, tipoCliente }) {
 
   if (datosReclamos.length === 0) {
     return <div className="section">
+            <h3>Reclamos</h3>
               <h3 style={{
-              paddingTop: "100px",
-              paddingLeft: "160px"
-              }}>No hay datos de reclamos </h3>
+              paddingTop: "5%",
+              paddingLeft: "30%"
+              }}>No hay datos de reclamos.</h3>
             </div>;
   }
 

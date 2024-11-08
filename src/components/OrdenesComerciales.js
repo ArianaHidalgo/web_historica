@@ -42,7 +42,7 @@ function OrdenesComerciales({ direccionSeleccionada, tipoCliente }) {
             <h3 style={{
               marginTop: "5%",
             marginLeft: "35%"
-            }}>No hay datos de órdenes comerciales</h3>
+            }}>No hay datos de órdenes comerciales.</h3>
           </div>;
   }
 
