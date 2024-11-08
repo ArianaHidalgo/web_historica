@@ -12,6 +12,7 @@ import { obtenerDatos } from './api';
 function App() {
   const [direccionSeleccionada, setDireccionSeleccionada] = useState(null);
   const [datosCliente, setDatosCliente] = useState([]);
+  const [tipoCliente, setTipoCliente] = useState(null); // Estado para tipoCliente
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -19,6 +20,10 @@ function App() {
       try {
         const clienteData = await obtenerDatos();
         setDatosCliente(clienteData);
+
+        // Suponiendo que `tipoCliente` es un atributo de `clienteData`
+        // y debe ser el mismo para todo `datosCliente` o configurable
+        setTipoCliente(clienteData[0]?.tipoCliente || null);
       } catch (error) {
         setError("Error al cargar datos del cliente.");
         console.error("Error al cargar datos del cliente:", error);
@@ -30,7 +35,8 @@ function App() {
 
   const cambiarDireccion = (selectedDireccion) => {
     setDireccionSeleccionada(selectedDireccion);
-    console.log("Dirección seleccionada:", selectedDireccion); // Log para verificar la dirección seleccionada
+    setTipoCliente(selectedDireccion.tipoCliente); // Actualiza `tipoCliente` basado en la dirección seleccionada
+    console.log("Dirección seleccionada:", selectedDireccion);
   };
 
   if (error) return <div>{error}</div>;
@@ -44,7 +50,8 @@ function App() {
 
       {/* Otros componentes que dependen de la dirección seleccionada */}
       <div className="row">
-        <Reclamos direccionSeleccionada={direccionSeleccionada} />
+        {/* Pasa `tipoCliente` a Reclamos */}
+        <Reclamos direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
       </div>
 
       <div className="row">

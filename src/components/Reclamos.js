@@ -1,27 +1,24 @@
+// src/components/Reclamos.js
 import React, { useEffect, useState } from 'react';
 import { obtenerReclamos } from '../api';
 
-function Reclamos({ direccionSeleccionada }) {
+function Reclamos({ direccionSeleccionada, tipoCliente }) {
   const [datosReclamos, setDatosReclamos] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const cargarReclamos = async () => {
+      if (!direccionSeleccionada || !tipoCliente) {
+        console.log("Esperando direccionSeleccionada y tipoCliente antes de cargar reclamos.");
+        return;
+      }
+
       try {
         setLoading(true);
-        console.log("Ejecutando cargarReclamos en Reclamos.js");
-
-        const reclamos = await obtenerReclamos();
-        console.log("Datos obtenidos en Reclamos.js:", reclamos);
-
-        if (reclamos && Array.isArray(reclamos) && reclamos.length > 0) {
-          setDatosReclamos(reclamos);
-          setError(null);
-        } else {
-          setDatosReclamos([]);
-          setError("No hay datos de reclamos disponibles");
-        }
+        console.log("Llamando a obtenerReclamos con:", direccionSeleccionada.rut, tipoCliente);
+        const reclamos = await obtenerReclamos(direccionSeleccionada.rut, tipoCliente);
+        setDatosReclamos(reclamos);
       } catch (err) {
         console.error("Error en cargarReclamos de Reclamos.js:", err);
         setError("No se pudieron cargar los reclamos");
@@ -30,29 +27,15 @@ function Reclamos({ direccionSeleccionada }) {
       }
     };
 
-    if (direccionSeleccionada) {
-      console.log("Dirección seleccionada detectada, llamando a cargarReclamos...");
-      console.log("Direccion seleccionada:", direccionSeleccionada); // Verifica el valor de la dirección seleccionada
-      cargarReclamos();
-    } else {
-      console.log("No hay dirección seleccionada");
-      setLoading(false);
-    }
-  }, [direccionSeleccionada]);
+    cargarReclamos();
+  }, [direccionSeleccionada, tipoCliente]);
 
-  console.log("Estado final de datosReclamos en render:", datosReclamos);
-
-  // Renderizado condicional
   if (error) {
     return <div>{error}</div>;
   }
 
   if (loading) {
     return <div>Cargando reclamos...</div>;
-  }
-
-  if (!direccionSeleccionada) {
-    return <div>Seleccione una dirección para ver los reclamos.</div>;
   }
 
   if (datosReclamos.length === 0) {

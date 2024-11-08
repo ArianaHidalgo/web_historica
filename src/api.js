@@ -27,7 +27,6 @@ export const obtenerDatos = async (rutCliente) => {
 
     const data = await response.json();
 
-    // Verifica si "message" ya es un array o necesita ser parseado
     const parsedMessage = Array.isArray(data.message) ? data.message : JSON.parse(data.message);
 
     return parsedMessage;
@@ -37,15 +36,16 @@ export const obtenerDatos = async (rutCliente) => {
   }
 };
 
-// Función para obtener datos de reclamos con lógica para `rutCliente`
-export const obtenerReclamos = async (rutCliente) => {
+// Función para obtener datos de reclamos con `tipoCliente`
+export const obtenerReclamos = async (rutCliente, tipoCliente) => {
   try {
     // Usa `rutCliente` proporcionado, o intenta obtenerlo desde la URL
     const rut = rutCliente || obtenerRutDesdeUrl();
 
     if (!rut) throw new Error('rutCliente no está disponible ni en el payload ni en la URL');
+    if (!tipoCliente) throw new Error('tipoCliente no está disponible para obtener los reclamos');
 
-    console.log("Iniciando llamada a la API de reclamos...");
+    console.log("Enviando solicitud a obtenerReclamos con:", { rut, tipoCliente });
 
     const response = await fetch(`${API_BASE_URL}/ms-get-reclamo-proj/ms-get-reclamos`, {
       method: 'POST',
@@ -54,11 +54,9 @@ export const obtenerReclamos = async (rutCliente) => {
       },
       body: new URLSearchParams({
         rut: rut,
-        cliente: 'PERSONA'
+        cliente: tipoCliente // Usa `tipoCliente` recibido como argumento
       })
     });
-
-    console.log("Estado de la respuesta:", response.status, response.statusText);
 
     if (!response.ok) throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
 
