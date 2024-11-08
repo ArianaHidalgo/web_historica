@@ -1,64 +1,70 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { obtenerProductosAdicionales } from '../api';
 
-function ProductosAdicionales({ direccionSeleccionada }) {
-  const contenidoProductosAdicionales = {
-    1: (
-      <table>
-        <thead>
-          <tr>
-            <th>Producto</th>
-            <th>Estado</th>
-            <th>Precio</th>
-            <th>Fecha-alta</th>
-            <th>Fecha-baja</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Paramount+</td>
-            <td>Activo</td>
-            <td>0</td>
-            <td>15-01-2022</td>
-            <td>--</td>
-          </tr>
-          <tr>
-            <td>Deco HD Adicional</td>
-            <td>Activo</td>
-            <td>$3000</td>
-            <td>18-03-2021</td>
-            <td>--</td>
-          </tr>
-        </tbody>
-      </table>
-    ),
-    2: (
-      <table>
-        <thead>
-          <tr>
-            <th>Producto</th>
-            <th>Estado</th>
-            <th>Precio</th>
-            <th>Fecha-alta</th>
-            <th>Fecha-baja</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Descuento $12000 x 6 meses</td>
-            <td>Activo</td>
-            <td>12,000</td>
-            <td>11-08-2023</td>
-            <td>--</td>
-          </tr>
-        </tbody>
-      </table>
-    ),
-  };
+function ProductosAdicionales({ direccionSeleccionada, tipoCliente }) {
+  const [productosAdicionales, setProductosAdicionales] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const cargarProductosAdicionales = async () => {
+      if (!direccionSeleccionada || !tipoCliente) {
+        console.log("Esperando direccionSeleccionada y tipoCliente antes de cargar productos adicionales.");
+        return;
+      }
+
+      try {
+        setLoading(true);
+        const productosData = await obtenerProductosAdicionales(direccionSeleccionada.rut, tipoCliente);
+        setProductosAdicionales(productosData);
+      } catch (err) {
+        console.error("Error en cargarProductosAdicionales de ProductosAdicionales.js:", err);
+        setError("No se pudieron cargar los productos adicionales");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    cargarProductosAdicionales();
+  }, [direccionSeleccionada, tipoCliente]);
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (loading) {
+    return <div>Cargando productos adicionales...</div>;
+  }
+
+  if (productosAdicionales.length === 0) {
+    return <div>No hay datos de productos adicionales disponibles</div>;
+  }
 
   return (
     <div className="section">
       <h3>Productos Adicionales</h3>
-      <div>{contenidoProductosAdicionales[direccionSeleccionada]}</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Estado</th>
+            <th>Precio</th>
+            <th>Fecha de Alta</th>
+            <th>Fecha de Baja</th>
+          </tr>
+        </thead>
+        <tbody>
+          {productosAdicionales.map((producto, index) => (
+            <tr key={index}>
+              <td>{producto.producto || "No disponible"}</td>
+              <td>{producto.estado || "No disponible"}</td>
+              <td>{producto.precio || "No disponible"}</td>
+              <td>{producto.fechaAlta || "No disponible"}</td>
+              <td>{producto.fechaBaja || "No disponible"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

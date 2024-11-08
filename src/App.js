@@ -21,7 +21,6 @@ function App() {
         const clienteData = await obtenerDatos();
         setDatosCliente(clienteData);
 
-        // Suponiendo que `tipoCliente` es un atributo de `clienteData`
         setTipoCliente(clienteData[0]?.tipoCliente || null);
       } catch (error) {
         setError("Error al cargar datos del cliente.");
@@ -49,14 +48,12 @@ function App() {
 
       {/* Otros componentes que dependen de la dirección seleccionada */}
       <div className="row">
-        {/* Pasa `tipoCliente` a Reclamos */}
         <Reclamos direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
       </div>
 
       <div className="row">
-        {/* Pasa `tipoCliente` a Productos */}
         <Productos direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
-        <ProductosAdicionales direccionSeleccionada={direccionSeleccionada} />
+        <ProductosAdicionales direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
       </div>
 
       <div className="row">
