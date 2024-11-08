@@ -1,3 +1,5 @@
+--------      URL         -------
+http://localhost:3000/?rutCliente=11305774-2 
 ------- SIN RECLAMOS ABAJO-------
 11305774-2
 12509860-6
