@@ -54,7 +54,7 @@ function App() {
         <NotasCredito direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
       </div>
       <div className="row">
-        <OrdenesComerciales direccionSeleccionada={direccionSeleccionada} />
+        <OrdenesComerciales direccionSeleccionada={direccionSeleccionada} tipoCliente={tipoCliente} />
       </div>
     </div>
   );

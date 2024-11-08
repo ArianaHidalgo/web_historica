@@ -1,161 +1,72 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { obtenerOrdenesComerciales } from '../api';
 
-function OrdenesComerciales({ direccionSeleccionada }) {
-  const contenidoOrdenesComerciales = {
-    1: (
-      <table>
-        <thead>
-          <tr>
-            <th>Orden</th>
-            <th>Canal Venta</th>
-            <th>Tipo Orden</th>
-            <th>Fecha Creación</th>
-            <th>Fecha Cierre</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>25689</td>
-            <td>Online</td>
-            <td>Contratación servicio</td>
-            <td>11-08-2017</td>
-            <td>12-09-2017</td>
-          </tr>
-        </tbody>
-      </table>
-    ),
-    2: (
-      <table>
-        <thead>
-          <tr>
-            <th>Orden</th>
-            <th>Canal Venta</th>
-            <th>Tipo Orden</th>
-            <th>Fecha Creación</th>
-            <th>Fecha Cierre</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>25468</td>
-            <td>Sucursal</td>
-            <td>Consulta</td>
-            <td>17-10-2028</td>
-            <td>--</td>
-          </tr>
-        </tbody>
-      </table>
-    )
-  };
+function OrdenesComerciales({ direccionSeleccionada, tipoCliente }) {
+  const [ordenesComerciales, setOrdenesComerciales] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const contenidoSuspensionVoluntaria = {
-    1: (
-      <table>
-        <thead>
-          <tr>
-            <th>Fecha Solicitud</th>
-            <th>Estado</th>
-            <th>Fecha Inicio Suspensión</th>
-            <th>Fecha React Servicio</th>
-            <th>Observación</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>11/08/2024</td>
-            <td>Cerrado</td>
-            <td>03/07/2024</td>
-            <td>15/08/2024</td>
-            <td>Cerrado</td>
-          </tr>
-        </tbody>
-      </table>
-    ),
-    2: (
-      <table>
-        <thead>
-          <tr>
-            <th>Fecha Solicitud</th>
-            <th>Estado</th>
-            <th>Fecha Inicio Suspensión</th>
-            <th>Fecha React Servicio</th>
-            <th>Observación</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>23/10/2024</td>
-            <td>Abierta</td>
-            <td>03/10/2024</td>
-            <td>---</td>
-            <td>Cuenta Pendiente</td>
-          </tr>
-        </tbody>
-      </table>
-    )
-  };
+  useEffect(() => {
+    const cargarOrdenesComerciales = async () => {
+      if (!direccionSeleccionada || !tipoCliente) {
+        console.log("Esperando direccionSeleccionada y tipoCliente antes de cargar órdenes comerciales.");
+        return;
+      }
 
-  const contenidoCambioTitular = {
-    1: (
-      <table>
-        <thead>
-          <tr>
-            <th>Orden</th>
-            <th>Descripción</th>
-            <th>Fecha Creación</th>
-            <th>Fecha Cierre</th>
-            <th>Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>123</td>
-            <td>Cambio titular de Ana Torres</td>
-            <td>04/10/2024</td>
-            <td>12/10/2024</td>
-            <td>Cerrado</td>
-          </tr>
-        </tbody>
-      </table>
-    ),
-    2: (
-      <table>
-        <thead>
-          <tr>
-            <th>Orden</th>
-            <th>Descripción</th>
-            <th>Fecha Creación</th>
-            <th>Fecha Cierre</th>
-            <th>Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>789</td>
-            <td>Cambio titular de José López</td>
-            <td>05/11/2023</td>
-            <td>12/11/2023</td>
-            <td>Cerrado</td>
-          </tr>
-        </tbody>
-      </table>
-    )
-  };
+      try {
+        setLoading(true);
+        const ordenesData = await obtenerOrdenesComerciales(direccionSeleccionada.rut, tipoCliente);
+        setOrdenesComerciales(ordenesData);
+      } catch (err) {
+        console.error("Error en cargarOrdenesComerciales de OrdenesComerciales.js:", err);
+        setError("No se pudieron cargar las órdenes comerciales");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    cargarOrdenesComerciales();
+  }, [direccionSeleccionada, tipoCliente]);
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (loading) {
+    return <div>Cargando órdenes comerciales...</div>;
+  }
+
+  if (ordenesComerciales.length === 0) {
+    return <div>No hay datos de órdenes comerciales disponibles</div>;
+  }
 
   return (
     <div className="section">
       <h3>Órdenes Comerciales</h3>
-      <div>{contenidoOrdenesComerciales[direccionSeleccionada]}</div>
-
-      <div className="sub">
-        <h3>Suspensión Voluntaria</h3>
-        <div>{contenidoSuspensionVoluntaria[direccionSeleccionada]}</div>
-      </div>
-
-      <div className="sub">
-        <h3>Cambio Titular</h3>
-        <div>{contenidoCambioTitular[direccionSeleccionada]}</div>
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Orden</th>
+            <th>Canal de Venta</th>
+            <th>Tipo de Orden</th>
+            <th>Descripción</th>
+            <th>Fecha Creación</th>
+            <th>Fecha Cierre</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ordenesComerciales.map((orden, index) => (
+            <tr key={index}>
+              <td>{orden.orden || "No disponible"}</td>
+              <td>{orden.canalVenta || "No disponible"}</td>
+              <td>{orden.tipoOrden || "No disponible"}</td>
+              <td>{orden.descripcion || "No disponible"}</td>
+              <td>{orden.fechaCreacion || "No disponible"}</td>
+              <td>{orden.fechaCierre || "No disponible"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

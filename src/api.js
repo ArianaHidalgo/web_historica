@@ -192,3 +192,32 @@ export const obtenerNotasCredito = async (rutCliente, tipoCliente) => {
     throw error;
   }
 };
+
+// Función para obtener órdenes comerciales
+export const obtenerOrdenesComerciales = async (rutCliente, tipoCliente) => {
+  try {
+    const rut = rutCliente || obtenerRutDesdeUrl();
+    if (!rut) throw new Error('rutCliente no está disponible ni en el payload ni en la URL');
+    if (!tipoCliente) throw new Error('tipoCliente no está disponible para obtener las órdenes comerciales');
+
+    console.log("Enviando solicitud a obtenerOrdenesComerciales con:", { rut, tipoCliente });
+
+    const response = await fetch(`${API_BASE_URL}/ms-get-orden-comercial-proj/ms-get-ordenes-comerciales`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        rut: rut,
+        cliente: tipoCliente
+      })
+    });
+
+    if (!response.ok) throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
+    const data = await response.json();
+    return Array.isArray(data.message) ? data.message : JSON.parse(data.message);
+  } catch (error) {
+    console.error("Error en obtenerOrdenesComerciales:", error);
+    throw error;
+  }
+};
