@@ -26,12 +26,13 @@ export const obtenerDatos = async (rutCliente) => {
     const data = await response.json();
     const parsedMessage = Array.isArray(data.message) ? data.message : JSON.parse(data.message);
 
-    return parsedMessage;
+    return { data: parsedMessage, rutCliente: rut }; // Devuelve `data` y `rutCliente`
   } catch (error) {
     console.error('Error al obtener datos:', error);
     throw error;
   }
 };
+
 
 // Función para obtener datos de reclamos con `tipoCliente`
 export const obtenerReclamos = async (rutCliente, tipoCliente) => {
